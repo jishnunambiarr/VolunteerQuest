@@ -15,4 +15,4 @@ Rewards and Discounts: Volunteers can redeem their earned points for rewards lik
 
 Try It Out
 -To run it locally, simply run with -npm install -npm start (The necessary dependencies have to be installed)
--Run it on web/ios/android by scanning the QR code on your phone or going on Web.
+-Run it on web/ios/android by scanning the QR code on your phone or going on Web using Expo Go.
