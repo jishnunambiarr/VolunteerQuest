@@ -5,8 +5,8 @@ VolunteerQuest is a mobile app that aims to reduce loneliness among young adults
 Two birds with one stone!
 
 Loneliness is a growing issue, especially among the younger population in urban areas like Munich. Older adults also often lack regular social interaction and a sense of community, which can have negative impacts on their mental and physical well-being. VolunteerQuest bridges this gap by creating a platform that incentivizes younger volunteers to regularly spend time with and assist older adults through various volunteering tasks. The gamification elements help foster a sense of engagement and enjoyment for both age groups, leading to the formation of meaningful intergenerational connections.
-Key Features
 
+Features:
 Volunteer Matching: The app matches younger volunteers with older adults based on location, interests, and availability.
 Gamified Tasks: Volunteers can earn points and badges for completing various volunteering activities, such as visiting the elderly, helping with household chores, or participating in social events.
 Leaderboards and Achievements: The app features leaderboards and achievement systems to encourage friendly competition and sustained engagement among volunteers.
