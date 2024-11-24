@@ -1,6 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, Animated, Dimensions } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { router } from 'expo-router';
+
+type RootStackParamList = {
+  Profile: undefined;
+  Certificate: { year: number; hours: number };
+  Rewards: { points: number };
+};
+
+type ProfileScreenNavigationProp = NavigationProp<RootStackParamList, 'Profile'>;
+
 
 type VolunteerStats = {
   totalHours: number;
@@ -35,6 +46,7 @@ export default function ProfileScreen() {
   const streakScale = useState(new Animated.Value(0))[0];
   const streakOpacity = useState(new Animated.Value(0))[0];
   const fireScale = useState(new Animated.Value(0))[0];
+  const navigation = useNavigation<ProfileScreenNavigationProp>();
 
   useEffect(() => {
     // Start the streak animation sequence
@@ -81,8 +93,11 @@ export default function ProfileScreen() {
     return () => clearTimeout(timer);
   }, []);
 
-  const handleGetCertificate = (year: number) => {
-    console.log(`Generating certificate for year ${year}`);
+  const handleGetCertificate = (year: number, hours: number) => {
+    router.push({
+      pathname: '/modals/certificates',
+      params: { year, hours }
+    });
   };
 
   const renderStreakOverlay = () => {
@@ -141,7 +156,13 @@ export default function ProfileScreen() {
 
         <View style={styles.contentContainer}>
           {/* Rewards Button */}
-          <TouchableOpacity style={styles.rewardsButton}>
+          <TouchableOpacity 
+              style={styles.rewardsButton}
+              onPress={() => router.push({
+                pathname: '/modals/rewards',
+                params: { points: DUMMY_STATS.points }
+              })}
+            >
             <FontAwesome5 name="gift" size={16} color="white" style={styles.rewardsIcon} />
             <Text style={styles.rewardsButtonText}>Claim Rewards</Text>
           </TouchableOpacity>
@@ -194,7 +215,7 @@ export default function ProfileScreen() {
                 </View>
                 <TouchableOpacity
                   style={styles.certificateButton}
-                  onPress={() => handleGetCertificate(yearData.year)}
+                  onPress={() => handleGetCertificate(yearData.year, yearData.hours)}
                 >
                   <FontAwesome5 name="download" size={16} color="white" style={styles.buttonIcon} />
                   <Text style={styles.certificateButtonText}>Get Certificate</Text>

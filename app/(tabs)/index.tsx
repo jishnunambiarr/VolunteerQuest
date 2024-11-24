@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { 
-  View, 
-  Text, 
-  StyleSheet, 
-  Dimensions, 
+import {
+  View,
+  Text,
+  StyleSheet,
+  Dimensions,
   Image,
   TouchableOpacity,
   Modal,
@@ -33,7 +33,7 @@ const DUMMY_DATA: VolunteerCard[] = [
     duration: '3 hours',
     location: 'Downtown Center',
     description: 'Help sort and distribute food to families in need. Join our dedicated team in making a difference in the lives of local families facing food insecurity.',
-    image: 'https://picsum.photos/seed/food1/800/600',
+    image: 'https://i.abcnewsfe.com/a/809fbf9b-ae78-42bc-aed6-de11f08bf6a3/food-bank-new-york-ht-jt-231122_1700684456504_hpEmbed_4x3.jpg?w=750',
     requirements: '• Must be 16 or older\n• Able to lift 20 lbs\n• Comfortable standing for long periods',
     impact: 'Your 3 hours help provide meals to over 50 families in need.',
   },
@@ -44,7 +44,7 @@ const DUMMY_DATA: VolunteerCard[] = [
     duration: '2 hours',
     location: 'Central Park',
     description: 'Join our weekly park cleanup initiative to maintain our beautiful green spaces. Help remove litter, maintain trails, and preserve nature.',
-    image: 'https://picsum.photos/seed/park2/800/600',
+    image: 'https://vinedisposal.com/AoOJmJbG1m8wSPOR58q4RG7KGRdXBYB81655215859.jpg',
     requirements: '• All ages welcome\n• Outdoor activity\n• Equipment provided',
     impact: 'Help maintain 5 acres of public park space for community enjoyment.',
   },
@@ -55,7 +55,7 @@ const DUMMY_DATA: VolunteerCard[] = [
     duration: '4 hours',
     location: 'Sunshine Retirement Home',
     description: 'Spend meaningful time with elderly residents through activities like reading, playing games, or simply engaging in conversation.',
-    image: 'https://picsum.photos/seed/senior3/800/600',
+    image: 'https://theglen.org/wp-content/uploads/2023/05/Retirement-Community-Living-vs-Senior-Housing-1536x1060.jpg',
     requirements: '• Background check required\n• Good communication skills\n• Patience and empathy',
     impact: 'Provide companionship to seniors and reduce social isolation.',
   }
@@ -63,6 +63,7 @@ const DUMMY_DATA: VolunteerCard[] = [
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const CARD_WIDTH = SCREEN_WIDTH * 0.9;
+const CARD_IMAGE_HEIGHT = 350;
 
 export default function ExploreScreen() {
   const [modalVisible, setModalVisible] = useState(false);
@@ -76,7 +77,7 @@ export default function ExploreScreen() {
 
   const renderCard = ({ item }: { item: VolunteerCard }) => {
     return (
-      <TouchableOpacity 
+      <TouchableOpacity
         activeOpacity={0.9}
         onPress={() => handleCardPress(item)}
         style={styles.card}
@@ -115,18 +116,20 @@ export default function ExploreScreen() {
         />
       </View>
 
-      {/* Horizontal Scrolling Cards */}
-      <FlatList
-        data={DUMMY_DATA}
-        renderItem={renderCard}
-        keyExtractor={(item) => item.id}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        snapToInterval={CARD_WIDTH + 20} // Card width + margin
-        snapToAlignment="center"
-        decelerationRate="fast"
-        contentContainerStyle={styles.cardList}
-      />
+      {/* Centered FlatList */}
+      <View style={styles.cardListContainer}>
+        <FlatList
+          data={DUMMY_DATA}
+          renderItem={renderCard}
+          keyExtractor={(item) => item.id}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          snapToInterval={CARD_WIDTH + 20} // Card width + margin
+          snapToAlignment="center"
+          decelerationRate="fast"
+          contentContainerStyle={styles.cardList}
+        />
+      </View>
 
       {/* Detail Modal */}
       <Modal
@@ -144,12 +147,12 @@ export default function ExploreScreen() {
                   <View style={styles.modalDetails}>
                     <Text style={styles.modalTitle}>{selectedCard.title}</Text>
                     <Text style={styles.modalOrg}>{selectedCard.organization}</Text>
-                    
+
                     <View style={styles.modalDetailRow}>
                       <FontAwesome5 name="clock" size={16} color="#6B46C1" />
                       <Text style={styles.modalDetailText}>{selectedCard.duration}</Text>
                     </View>
-                    
+
                     <View style={styles.modalDetailRow}>
                       <FontAwesome5 name="map-marker-alt" size={16} color="#6B46C1" />
                       <Text style={styles.modalDetailText}>{selectedCard.location}</Text>
@@ -164,7 +167,7 @@ export default function ExploreScreen() {
                     <Text style={styles.sectionTitle}>Your Impact</Text>
                     <Text style={styles.modalDescription}>{selectedCard.impact}</Text>
 
-                    <TouchableOpacity 
+                    <TouchableOpacity
                       style={styles.applyButton}
                       onPress={() => setModalVisible(false)}
                     >
@@ -174,7 +177,7 @@ export default function ExploreScreen() {
                 </>
               )}
             </ScrollView>
-            <TouchableOpacity 
+            <TouchableOpacity
               style={styles.closeButton}
               onPress={() => setModalVisible(false)}
             >
@@ -191,20 +194,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f5f5f5',
+    justifyContent: 'space-between', // Ensures balanced spacing
   },
   searchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: 'white',
     margin: 16,
-    marginBottom: 8,
     padding: 12,
     borderRadius: 12,
     shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 3,
     elevation: 3,
@@ -217,9 +217,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#333',
   },
+  cardListContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   cardList: {
     paddingHorizontal: 10,
-    paddingTop: 10,
   },
   card: {
     width: CARD_WIDTH,
@@ -228,17 +232,14 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 20,
     shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
+    shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 4.65,
     elevation: 8,
   },
   cardImage: {
     width: '100%',
-    height: 250,
+    height: CARD_IMAGE_HEIGHT,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
   },
@@ -290,7 +291,7 @@ const styles = StyleSheet.create({
   },
   modalImage: {
     width: '100%',
-    height: 250,
+    height: CARD_IMAGE_HEIGHT + 50,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
   },
