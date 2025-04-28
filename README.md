@@ -13,6 +13,24 @@ Leaderboards and Achievements: The app features leaderboards and achievement sys
 Rewards and Discounts: Volunteers can redeem their earned points for rewards like gift cards, discounts at local businesses, or priority access to future events.
 
 
-Try It Out
--To run it locally, simply run with -npm install -npm start (The necessary dependencies have to be installed)
--Run it on web/ios/android by scanning the QR code on your phone or going on Web using Expo Go.
+Getting Started
+Prerequisites
+Make sure you have the following installed:
+
+Node.js
+
+Expo Go (for mobile preview)
+
+
+Running Locally
+
+```
+npm install
+npm start
+```
+
+You can then:
+
+Scan the QR code with the Expo Go app on your Android/iOS device, or
+
+Open in browser for Web preview
